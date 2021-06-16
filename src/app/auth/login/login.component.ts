@@ -101,6 +101,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else {
             // alert("BETA 1.01");
             // this.authService.loginUser(form.value.email, form.value.password);
+            this.authService.login(form.value.email, form.value.password);
         }
     }
 
