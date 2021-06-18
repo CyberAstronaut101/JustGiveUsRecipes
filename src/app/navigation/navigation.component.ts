@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignOutAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -24,6 +24,8 @@ export class NavigationComponent implements OnInit, OnDestroy{
   userName = 'default';
 
   faBars = faBars;
+  faSignOut = faSignOutAlt;
+  faSignIn = faSignInAlt;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
