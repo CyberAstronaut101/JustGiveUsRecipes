@@ -7,25 +7,7 @@ import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-// import { faBars,
-//         faSignInAlt,
-//         faSignOutAlt,
-//         faHome,
-//         faBug,
-//         faUserPlus,
-//         faUserCircle,
-//         faArchway,
-//         faToriiGate,
-//         faDungeon,
-//         faCube,
-//         faLayerGroup,
-//         faServer
-
-
-//        } from '@fortawesome/free-solid-svg-icons';
-// import { MatSidenavModule } from '@angular/material';
-// import { _ } from 'ag-grid-community';
-
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -48,34 +30,41 @@ export class NavigationComponent implements OnInit, OnDestroy{
       map(result => result.matches)
     );
 
+  private authListener: Subscription;
+
   constructor(
     private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
     // private authService: AuthService,
-    private router: Router) {}
+    private router: Router) {
+      this.authListener = this.authService.getAuthStatusListener()
+        .subscribe(isAuthenticated => {
+          console.log("NAVIGATION SUBSCRIPTION UPDATED WITH NEW AUTH STATE:");
+          this.userIsAuthenticated = isAuthenticated;
+      })
+
+    }
 
 
   ngOnInit() {
-    // to get initial auth value
-    // this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.userLevel = this.authService.getUserLevel();
-    // this.userName = this.authService.getUserFullName();
-    // // setup subscription to userAuth status
-    // this.authListenerSubs = this.authService
-    //   .getAuthStatusListener()
+
+    console.log("NAVIGATION: ",this.authService.isLoggedIn);
+
+    // this.authService.getAuthStatus();
+
+    // if(this.authService.isLoggedIn) {
+    //   console.log(this.authService.isLoggedIn);
+    //  this.userIsAuthenticated = true;
+    // }
+   
+    // this.authListener = this.authService.getAuthStatusListener()
     //   .subscribe(isAuthenticated => {
     //     this.userIsAuthenticated = isAuthenticated;
-    //     this.userLevel = this.authService.getUserLevel();
-    //     this.userName = this.authService.getUserFullName();
-
-    //   });
-
-
-    // TODO need to add a socket.io connection to the AuthService
-    // to allow for push messages to be sent to people at a higher frame level.
+    //   })
   }
 
   onLogout() {
-    console.log('onLogout() --> authService.logout()');
+    this.authService.logout();
     // clear token
     // inform all parts about auth change
     // this.authService.logout();

@@ -9,31 +9,77 @@ import { AngularFireAuth } from  "@angular/fire/auth";
 // import auth from 'firebase/app';
 
 import { firebase } from '@firebase/app';
+// import { User } from '@firebase/default/user';
 import { User } from '../shared/interfaces';
-// import { auth } from 'firebase';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { NotificationService } from '../shared/notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
   user: any;
+  // currentUser;
+  // private authStatusSub = new BehaviorSubject(this.user);
+  // currentAuthStatus = this.authStatusSub.asObservable();
 
-  constructor(public afAuth: AngularFireAuth, public router: Router) {
+  // public signedIn: Observable<any>;
 
-    // Subscribe to the authentication state
+  private authStatusListener = new Subject<boolean>();
+
+  constructor(
+    public afAuth: AngularFireAuth,
+    public router: Router,
+    private notify: NotificationService
+    ) {
+
+    // this.signedIn = new Observable((subscriber) => {
+    //   this.afAuth.onAuthStateChanged(subscriber);
+    //   console.log("Signed In authStatusChanged");
+    // });
+
     this.afAuth.authState.subscribe(user => {
-      if (user){
+      console.log("AUTH SERVICE::::: AUTHSTATE SUBSCIPTION UPDATED");
+      if (user) {
         this.user = user;
         localStorage.setItem('user', JSON.stringify(this.user));
+        JSON.parse(localStorage.getItem('user')!);
+        this.authStatusListener.next(true);
       } else {
-        localStorage.setItem('user', ""); // TODO SET THIS TO NULL???
+        this.authStatusListener.next(false);
+        localStorage.setItem('user', '');
+        JSON.parse(localStorage.getItem('user')!);
       }
     })
 
   }
 
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
+
+  // authStatusListener() {
+  //   this.afAuth.onAuthStateChanged((credential) => {
+  //     console.log("AUTH STATUS CHANGED");
+  //     console.log(credential);
+  //     if(credential) {
+
+  //       // console.log(credential)
+  //       // localStorage.setItem('user', JSON.stringify(credential.uid));
+
+  //       this.authStatusSub.next(credential);
+  //     } else {
+  //       this.authStatusSub.next(null);
+  //       localStorage.setItem('user', "")
+  //     }
+  //   })
+  // }
+
+
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log("AuthService const user:", user)
     return user !== null;
   }
 
@@ -45,9 +91,28 @@ export class AuthService {
 
 
   async login(email: string, password: string){
-    var result = await this.afAuth.signInWithEmailAndPassword(email, password);
+    this.afAuth.signInWithEmailAndPassword(email, password)
+      .then(result => {
+        console.log("Login Result");
+        console.log(result);
+        this.authStatusListener.next(true);
+        this.router.navigate(['home']);
+      })
+      .catch(err => {
+        console.log("ERROR:", err.message);
 
-    console.log("TODO redirect based on the result state");
+        this.notify.badAlert("Failed to Login!", "Okay");
+
+        if(err.code == "auth/user-not-found") {
+          return false;
+        }
+
+        return false;
+
+
+
+      })
+
   }
 
   async register(email: string, password: string) {
@@ -68,9 +133,17 @@ export class AuthService {
     return await this.afAuth.sendPasswordResetEmail(passwordResetEmail);
   }
 
-  async logout() {
-    await this.afAuth.signOut();
-    localStorage.removeItem('user');
-    this.router.navigate(['auth/login']);
+  logout() {
+    console.log("LOGGING OUT");
+
+    return this.afAuth.signOut().then(() => {
+      // Remove local storage of user
+      localStorage.removeItem('user');
+
+      this.authStatusListener.next(false);
+
+      this.router.navigate(['auth/login']);
+
+    })
   }
 }

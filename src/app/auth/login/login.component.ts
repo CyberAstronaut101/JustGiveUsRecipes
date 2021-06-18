@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // import { MessageService, ConfirmationService } from 'primeng/api';
 // import { MatDialog } from '@angular/material';
@@ -35,7 +36,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
     // inject so we can use the auth.service.js
-    constructor(public authService: AuthService,
+    constructor(
+        public authService: AuthService,
+        private snackBar: MatSnackBar
                 // public userService: UserService,
                 // private messageService: MessageService,
                 // private confirmationService: ConfirmationService,       // ? Figure out why we needed this, not referenced
@@ -97,12 +100,24 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log("Login Button pressed with form values: ");
         console.log(form.value);
         if(form.invalid) {
+            // Inform via Snackbar
+            this.showSnackBarAction("Invalid Login Form", "Okay")
             return;
         } else {
-            // alert("BETA 1.01");
-            // this.authService.loginUser(form.value.email, form.value.password);
             this.authService.login(form.value.email, form.value.password);
         }
+    }
+
+    showSnackBar(content: string) {
+        this.snackBar.open(content)
+    }
+
+    showSnackBarAction(content: string, action: string) {
+        this.snackBar.open(content,action)
+    }
+
+    showSnackBarDuration(content: string, action: string, duration: any) {
+        this.snackBar.open(content, action, duration);
     }
 
     ngOnDestroy() {
