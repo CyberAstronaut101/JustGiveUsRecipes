@@ -32,8 +32,13 @@
             <fa-icon [icon]="faClipboard" size="lg"></fa-icon>&ensp;Generate Meals
           </a>
 
-          <a *ngIf="userIsAuthenticated" [routerLink]="['/']" mat-list-item>
+          <a *ngIf="userIsAuthenticated" [routerLink]="['/recipes/gallery']" mat-list-item>
             <fa-icon [icon]="faUtensils" size="lg"></fa-icon>&ensp;Recipes
+          </a>
+
+
+          <a *ngIf="userIsAuthenticated" [routerLink]="['/eatingout']" mat-list-item>
+            <fa-icon [icon]="faHamburger" size="lg"></fa-icon>&ensp;Eating Out
           </a>
           
 
