@@ -25,10 +25,18 @@
           <a [routerLink]="['/']" mat-list-item>Main</a>
           <br>
           <a *ngIf="userIsAuthenticated" [routerLink]="['/']" mat-list-item>
-            <!-- <fa-icon [icon]="faHome" size="lg"></fa-icon>&ensp;Home -->
-            Home
+            <fa-icon [icon]="faHome" size="lg"></fa-icon>&ensp;Home
           </a>
   
+          <a *ngIf="userIsAuthenticated" [routerLink]="['/']" mat-list-item>
+            <fa-icon [icon]="faClipboard" size="lg"></fa-icon>&ensp;Generate Meals
+          </a>
+
+          <a *ngIf="userIsAuthenticated" [routerLink]="['/']" mat-list-item>
+            <fa-icon [icon]="faUtensils" size="lg"></fa-icon>&ensp;Recipes
+          </a>
+          
+
           <a *ngIf="userIsAuthenticated && userLevel == 'admin'" [routerLink]="['/auth/signup']" mat-list-item>
             <!-- <fa-icon [icon]="addUser" size="lg"></fa-icon>&ensp;Dev Create User -->
             DEV
@@ -46,29 +54,14 @@
             <fa-icon [icon]="employeeGate" size="lg"></fa-icon>&ensp;Employee
           </a> -->
   
-          <!-- STUDENT/USER LEVEL NAV ITEMS -->
-          <!-- <a *ngIf="userIsAuthenticated" [routerLink]="['/student']" mat-list-item>
-            <fa-icon [icon]="studentGate" size="lg"></fa-icon>&ensp;Student
-          </a> -->
-  
-          <!-- 3D Print Job Submission Module -->
-          <a *ngIf="userIsAuthenticated" [routerLink]="['/printerlab']" mat-list-item>
-            <!-- <fa-icon [icon]="cube" size="lg"></fa-icon>&ensp;3D Printer Lab -->
-          </a>
-  
-          <a *ngIf="userIsAuthenticated" [routerLink]="['/jobrequest']" mat-list-item>
-            <!-- <fa-icon [icon]="layerGroup" size="lg"></fa-icon>&ensp;Submit Request -->
-          </a>
+
   
   
-          <!-- STUDENT/USER LEVEL NAV ITEMS -->
-          <a *ngIf="userIsAuthenticated" [routerLink]="['/account']" mat-list-item>
-            <!-- <fa-icon [icon]="userAccount" size="lg"></fa-icon>&ensp;User Account -->
-          </a>
+
   
           <!-- LOGIN / LOGOUT Buttons, Contact Admin, Close Navigation Manually -->
           <a *ngIf="!userIsAuthenticated" [routerLink]="['/auth/login']" mat-list-item>
-            <!-- <fa-icon [icon]="faSignIn" size="lg"></fa-icon>&ensp;Login -->
+            <fa-icon [icon]="faSignIn" size="lg"></fa-icon>&ensp;Login
           </a>
   
           <a *ngIf="userIsAuthenticated" (click)="onLogout()" mat-list-item>
@@ -77,7 +70,7 @@
   
   
             <hr />
-          <a mat-list-item href="https://git.uark.edu/ejmason/capstone-fjlrs/issues">&ensp;Submit Bug</a>
+          <a mat-list-item href="https://github.com/ejmason101/JustGiveUsRecipes/issues">&ensp;Submit Bug</a>
           <!-- <a (click)="sidenav.toggle()" mat-list-item>Close Nav</a> -->
   
         </mat-nav-list>

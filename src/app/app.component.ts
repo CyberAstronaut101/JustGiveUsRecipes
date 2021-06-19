@@ -8,5 +8,5 @@ import { NotificationService } from './shared/notification.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'justgiverecipes';
+  title = 'Just Give Us Recipes';
 }
