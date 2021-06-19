@@ -12,7 +12,8 @@ import {
   faSignInAlt,
   faHome,
   faUtensils,
-  faClipboardList
+  faClipboardList,
+  faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../auth/auth.service';
 
@@ -36,6 +37,7 @@ export class NavigationComponent implements OnInit, OnDestroy{
   faHome = faHome;
   faUtensils = faUtensils;
   faClipboard = faClipboardList;
+  faUserCircle = faUserCircle;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

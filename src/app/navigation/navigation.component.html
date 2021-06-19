@@ -37,15 +37,15 @@
           </a>
           
 
-          <a *ngIf="userIsAuthenticated && userLevel == 'admin'" [routerLink]="['/auth/signup']" mat-list-item>
+          <!-- <a *ngIf="userIsAuthenticated && userLevel == 'admin'" [routerLink]="['/auth/signup']" mat-list-item> -->
             <!-- <fa-icon [icon]="addUser" size="lg"></fa-icon>&ensp;Dev Create User -->
-            DEV
-          </a>
+            
+          <!-- </a> -->
   
           <!-- If User is an admin -->
-          <a *ngIf="userIsAuthenticated && userLevel == 'admin'" [routerLink]="['/admin']" mat-list-item>
-            <!-- <fa-icon [icon]="adminGate" size="lg"></fa-icon>&ensp;Admin -->
-          </a>
+          <!-- <a *ngIf="userIsAuthenticated" [routerLink]="['/admin']" mat-list-item>
+            <fa-icon [icon]="adminGate" size="lg"></fa-icon>&ensp;Admin
+          </a> -->
   
           <!-- EMPLOYEE LEVEL NAV ITEMS -->
           <!-- Will come back and add these pages  -->
@@ -56,7 +56,9 @@
   
 
   
-  
+          <a *ngIf="userIsAuthenticated" [routerLink]="['/auth/login']" mat-list-item>
+            <fa-icon [icon]="faUserCircle" size="lg"></fa-icon>&ensp;Account
+          </a>
 
   
           <!-- LOGIN / LOGOUT Buttons, Contact Admin, Close Navigation Manually -->
@@ -69,7 +71,8 @@
           </a>
   
   
-            <hr />
+          <hr />
+
           <a mat-list-item href="https://github.com/ejmason101/JustGiveUsRecipes/issues">&ensp;Submit Bug</a>
           <!-- <a (click)="sidenav.toggle()" mat-list-item>Close Nav</a> -->
   
