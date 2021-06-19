@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FastfoodsearchService } from '../fastfoodsearch.service';
 
 @Component({
   selector: 'app-generate-fastfood',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenerateFastfoodComponent implements OnInit {
 
-  constructor() { }
+  constructor(private yelpService: FastfoodsearchService) { }
 
   ngOnInit(): void {
+
   }
 
 }

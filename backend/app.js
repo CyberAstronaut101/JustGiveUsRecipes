@@ -2,28 +2,24 @@ const path = require('path');
 // holds the express app
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 
-// Swagger API Docs
-const swaggerUi = require('swagger-ui-express');
-const  swaggerJSDoc = require('swagger-jsdoc');
 
 // IMPORTANT !!!!!! IMPORTANT
 // This is where you define which config file that is normally hidden to pull the DB credentials from
 // config_data = require('./config/config.example.json');
 // config_data = require('./config/config.development.json');
 
-try {
-    config_data = require('./config/config.development.json');
-} catch (e) {
-    console.log("===================================================");
-    console.log("Looks like app.js has an error trying to import the");
-    console.log("Config file at /backend/config/");
-    console.log("Make sure that the file it is trying to require()");
-    console.log("Exists and has a matching name.");
-    console.log("===================================================");
-    process.exit(1);
-}
+// try {
+//     config_data = require('./config/config.development.json');
+// } catch (e) {
+//     console.log("===================================================");
+//     console.log("Looks like app.js has an error trying to import the");
+//     console.log("Config file at /backend/config/");
+//     console.log("Make sure that the file it is trying to require()");
+//     console.log("Exists and has a matching name.");
+//     console.log("===================================================");
+//     process.exit(1);
+// }
 
 /*=================================================================================
 Express.js Setup
@@ -53,41 +49,41 @@ const app = express();
 
 // Setup port, ip, monogoURL
 var port = process.env.PORT || 8080,
-    ip   =  '0.0.0.0' || process.env.IP,
-    mongoURL =  process.env.MONGO_URL || config_data.mongoURL,
-    mongoURLLabel = "";
+    ip   =  '0.0.0.0' || process.env.IP;
+    // mongoURL =  process.env.MONGO_URL || config_data.mongoURL,
+    // mongoURLLabel = "";
 
 
 /**================================================== *
  * ==========  MongoDB Connection Setup  ========== *
  * ================================================== */
-var db = mongoose.connection;
-db.on('error', function callback() {
-    console.error.bind(console, 'connection error:');
-    /*
-        If this section executes, it means that the connection to the MongoDB instance failed
-        This could be because there is no config file under /backend/config/ that has a valid mongoURL
-        or that the MongoDB atlas instance is down - but this reason is highly unlikely.
-        For now, I am just going to add a nice message to the console that will address the config issue
-    */
-    console.log();
-    console.log("=================================================");
-    console.log("woooah, looks like the API cannot successfully");
-    console.log("connect to the MongoDB instance. Make sure that ");
-    console.log("the mongoURL in the config file is correct");
-    console.log("=================================================");
-    // Killing API process b/c the db is down. 
-    process.exit(1);
+// var db = mongoose.connection;
+// db.on('error', function callback() {
+//     console.error.bind(console, 'connection error:');
+//     /*
+//         If this section executes, it means that the connection to the MongoDB instance failed
+//         This could be because there is no config file under /backend/config/ that has a valid mongoURL
+//         or that the MongoDB atlas instance is down - but this reason is highly unlikely.
+//         For now, I am just going to add a nice message to the console that will address the config issue
+//     */
+//     console.log();
+//     console.log("=================================================");
+//     console.log("woooah, looks like the API cannot successfully");
+//     console.log("connect to the MongoDB instance. Make sure that ");
+//     console.log("the mongoURL in the config file is correct");
+//     console.log("=================================================");
+//     // Killing API process b/c the db is down. 
+//     process.exit(1);
 
-});
+// });
 
-db.once('open', function callback () {
-    console.log("Connected to Mongodb Instance");
-    console.log("Accepting connections to webapp @ port " + port)
-});
+// db.once('open', function callback () {
+//     console.log("Connected to Mongodb Instance");
+//     console.log("Accepting connections to webapp @ port " + port)
+// });
 
-mongoose.connect(mongoURL, {useNewUrlParser : true});
-mongoose.set('useFindAndModify', false); // https://mongoosejs.com/docs/deprecations.html#-findandmodify-
+// mongoose.connect(mongoURL, {useNewUrlParser : true});
+// mongoose.set('useFindAndModify', false); // https://mongoosejs.com/docs/deprecations.html#-findandmodify-
 
 /* =======  End of MongoDB Connection Setup  ======= */
 
@@ -125,26 +121,10 @@ app.get('/healthcheck', (req, res) => res.send('OK'));
  * ==========  Configure API Route Files  ========== *
  * ================================================== */
 
-const todosRoutes = require("./routes/todos");
-const userRoutes = require("./routes/user");
-const newsRoutes = require("./routes/news");
-const emailRoutes = require("./routes/email");
-const calendarRoutes = require("./routes/calendar");
-const materialRoutes = require("./routes/material");
-const printQueueRoutes = require("./routes/printerLab");
-const printerMgmnt = require("./routes/printer");
-const commentRoutes = require("./routes/comment");
+const yelpRoutes = require("./routes/yelp");
+app.use("/api/yelp", yelpRoutes);
 
-// The files above are then used here to define which request paths they should handle
-app.use("/api/todos", todosRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/news", newsRoutes);
-app.use("/api/email", emailRoutes);
-app.use("/api/material", materialRoutes);
-app.use("/api/calendar", calendarRoutes);
-app.use("/api/printlab", printQueueRoutes);
-app.use("/api/printer", printerMgmnt);
-app.use("/api/comment", commentRoutes);
+
 
 /* =======  End of Configure API Route Files  ======= */
 
