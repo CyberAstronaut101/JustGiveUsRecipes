@@ -92,6 +92,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     }
 
+    doGoogleLogin() {
+        this.authService.googleLogin();
+    }
+
     onLogin(form: NgForm) {
 
         // Clear any of the pMessages from previous attempts on a new login attempt.

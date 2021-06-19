@@ -16,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeModule } from './pages/home/home.module';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { GenerateMealsComponent } from './pages/generate-meals/generate-meals.component';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBd2EKDXbTpIKI2fSiwRw8I0oEsEmBqlr0",
@@ -31,7 +32,8 @@ var firebaseConfig = {
   declarations: [
     AppComponent,
     NavigationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    GenerateMealsComponent
   ],
   imports: [
     AuthModule,

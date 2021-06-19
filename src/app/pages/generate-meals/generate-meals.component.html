@@ -1,0 +1,35 @@
+<div class="p-grid p-jc-center">
+
+
+    <mat-card class="p-col-8">
+        <mat-card-title>Generate Meals</mat-card-title>
+
+
+        <mat-select>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-select>
+        
+        <mat-card *ngFor="let row of rows">
+            <mat-card-subtitle>{{row}}</mat-card-subtitle>
+    
+            <mat-card-content *ngIf="!collapsed">
+
+                <p>This is some example text.</p>
+                 <p>This text will disappear when you use the action button in the actions bar below.</p>
+              
+              
+              </mat-card-content>
+              <mat-card-actions>
+                 <button mat-button (click)="collapsed=true">Collapse text</button>
+                 <button mat-button (click)="collapsed=false">Uncollapse text</button>
+              </mat-card-actions>
+        </mat-card>
+    
+    
+    </mat-card>
+
+</div>
+
+

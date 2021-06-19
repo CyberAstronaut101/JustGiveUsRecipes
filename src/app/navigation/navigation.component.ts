@@ -51,11 +51,14 @@ export class NavigationComponent implements OnInit, OnDestroy{
     private authService: AuthService,
     // private authService: AuthService,
     private router: Router) {
+
       this.authListener = this.authService.getAuthStatusListener()
         .subscribe(isAuthenticated => {
           console.log("NAVIGATION SUBSCRIPTION UPDATED WITH NEW AUTH STATE:");
+          console.log(isAuthenticated);
           this.userIsAuthenticated = isAuthenticated;
       })
+      
 
     }
 
@@ -64,6 +67,8 @@ export class NavigationComponent implements OnInit, OnDestroy{
 
     console.log("NAVIGATION: ",this.authService.isLoggedIn);
 
+
+    
     // this.authService.getAuthStatus();
 
     // if(this.authService.isLoggedIn) {

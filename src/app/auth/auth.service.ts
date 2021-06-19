@@ -1,31 +1,26 @@
 import { Injectable } from '@angular/core';
-
-
 import { Router } from  "@angular/router";
 import { AngularFireAuth } from  "@angular/fire/auth";
 
 // import { auth } from 'firebase/app';
-
+// import { auth } from 'firebase';
 // import auth from 'firebase/app';
 
 import { firebase } from '@firebase/app';
+// import {auth} from 'firebase';
+// import '@firebase/auth';
 // import { User } from '@firebase/default/user';
 import { User } from '../shared/interfaces';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../shared/notification.service';
+import { FirebaseApp } from '@angular/fire';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  user: any;
-  // currentUser;
-  // private authStatusSub = new BehaviorSubject(this.user);
-  // currentAuthStatus = this.authStatusSub.asObservable();
-
-  // public signedIn: Observable<any>;
-
+  user: any; 
   private authStatusListener = new Subject<boolean>();
 
   constructor(
@@ -83,10 +78,15 @@ export class AuthService {
     return user !== null;
   }
 
-  async loginWithGoogle() {
-    // await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    
-    console.log("ADD LOGIN WITH GOOGLE SERVICE");
+  googleLogin() {
+    // auth.GoogleAuthProvider();
+    // const provider = new firebase.
+    // this.oAuthLogin(provider);
+
+  }
+
+  oAuthLogin(provider: any) {
+    return this.afAuth.signInWithPopup(provider)
   }
 
 
@@ -136,9 +136,10 @@ export class AuthService {
   logout() {
     console.log("LOGGING OUT");
 
-    return this.afAuth.signOut().then(() => {
+    this.afAuth.signOut().then(() => {
       // Remove local storage of user
       localStorage.removeItem('user');
+      this.user = null;
 
       this.authStatusListener.next(false);
 

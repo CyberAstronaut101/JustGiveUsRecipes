@@ -3,20 +3,20 @@
 
 
 <div id="loginFullDiv">
-    <div class="ui-g">
+    <div class="p-grid">
 
-        <mat-card class="ui-g-4 ui-sm-12 loginCard">
+        <mat-card class="p-col-6 loginCard">
 
             <mat-spinner *ngIf="isLoading"></mat-spinner>
 
             <mat-card-title>
-                System Login
+                User Login
             </mat-card-title>
 
             <!-- <p-messages></p-messages> -->
 
             <mat-card-content>
-                <form class="ui-g" (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+                <form class="p-col" (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
                     <mat-form-field>
                         <input matInput type="email" placeholder="Email" name="email" ngModel #emailInput="ngModel" required email>
                         <mat-error *ngIf="emailInput.invalid">Please Enter Valid Email</mat-error>
@@ -30,8 +30,16 @@
 
                     <!-- <mat-card-actions> -->
 
-                        <button class="ui-g-5 centeredButton" mat-raised-button color="primary"
-                        *ngIf="!isLoading">Login</button>
+                    <div class="p-grid p-jc-center">
+                        <button class="p-lg-3 p-sm-12" mat-raised-button color="primary">Login</button>
+
+                        <button class="p-lg-3 p-sm-12" mat-raised-button type="button">Google SSO</button>
+
+
+                        <button class="p-lg-3 p-sm-12" mat-raised-button (click)="getEmailForPasswdReset()"
+                        color="secondary" type="button">Forgot Password</button>
+                    </div>
+                        
 
                     <!-- </mat-card-actions> -->
 
@@ -43,8 +51,7 @@
 
                     <!-- <button class="ui-g-4 centeredButton" mat-raised-button> FJLRS Wiki</button> -->
 
-                    <button class="centeredButton" mat-raised-button (click)="getEmailForPasswdReset()"
-                        color="secondary" *ngIf="!isLoading">Forgot Password?</button>
+                    
 
                     
 
