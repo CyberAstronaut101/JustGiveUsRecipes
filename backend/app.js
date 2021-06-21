@@ -9,17 +9,17 @@ const bodyParser = require('body-parser');
 // config_data = require('./config/config.example.json');
 // config_data = require('./config/config.development.json');
 
-// try {
-//     config_data = require('./config/config.development.json');
-// } catch (e) {
-//     console.log("===================================================");
-//     console.log("Looks like app.js has an error trying to import the");
-//     console.log("Config file at /backend/config/");
-//     console.log("Make sure that the file it is trying to require()");
-//     console.log("Exists and has a matching name.");
-//     console.log("===================================================");
-//     process.exit(1);
-// }
+try {
+    config_data = require('./config/config.development.json');
+} catch (e) {
+    console.log("===================================================");
+    console.log("Looks like app.js has an error trying to import the");
+    console.log("Config file at /backend/config/");
+    console.log("Make sure that the file it is trying to require()");
+    console.log("Exists and has a matching name.");
+    console.log("===================================================");
+    process.exit(1);
+}
 
 /*=================================================================================
 Express.js Setup
@@ -121,7 +121,7 @@ app.get('/healthcheck', (req, res) => res.send('OK'));
  * ==========  Configure API Route Files  ========== *
  * ================================================== */
 
-const yelpRoutes = require("./routes/yelp");
+const yelpRoutes = require("./routes/fastfood");
 app.use("/api/yelp", yelpRoutes);
 
 
